@@ -114,7 +114,7 @@ fn main() {
     // Init window
     #[cfg(target_os = "linux")]
     {
-        std::env::set_var("GLFW_PLATFORM", "wayland");
+        //std::env::set_var("GLFW_PLATFORM", "wayland");
         if glfw::Platform::Wayland.is_supported() {
             println!("Wayland supported, using Wayland.");
         } else {
