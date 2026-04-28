@@ -1,7 +1,7 @@
 
 
 mod test_vector {
-    use rust_opengl::util::math::vector::{Vector2, Vector3, Vector4};
+    use arcadia_engine::util::math::vector::{Vector2, Vector3, Vector4};
 
     #[test]
     fn test_vector2_add_vector() {

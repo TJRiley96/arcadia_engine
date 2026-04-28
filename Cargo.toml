@@ -1,12 +1,13 @@
 [package]
-name = "rust_opengl"
-version = "0.1.0"
+name = "arcadia_engine"
+version = "0.1.1"
 authors = ["TJ Riley <tjriles96@gmail.com>"]
 edition = "2024"
 
 publish = false
 
 [dependencies]
+arcadia_engine_derive = { path = "arcadia_engine_derive" }
 bytemuck = "1.25.0"
 chrono = "0.4.44"
 colored = "3.1.1"
@@ -16,5 +17,3 @@ image = "0.25.10"
 
 
 [dev-dependencies]
-beryllium = "^0.13.3"
-imagine = "^0.5.3"

@@ -343,10 +343,10 @@ impl ShaderProgram {
         }
     }
 
-    pub fn set_uniform_matrix4fv(&self, name: &str, count: GLsizei, transpose: GLboolean, value: &[f32]) {
+    pub fn set_uniform_matrix4fv(&self, name: &str, count: GLsizei, transpose: bool, value: &[f32]) {
         if let Some(location) = self.get_uniform_location(name) {
             unsafe {
-                gl::UniformMatrix4fv(location, count, transpose, value.as_ptr());
+                gl::UniformMatrix4fv(location, count, transpose as u8, value.as_ptr());
             }
         }
     }

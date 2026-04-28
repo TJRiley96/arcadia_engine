@@ -1,5 +1,7 @@
 // Built-in imports
 
+use arcadia_engine::ComponentTrait;
+use arcadia_engine::util::math::matrix::Matrix4;
 // Third-party imports
 use gl;
 use glfw::{
@@ -77,11 +79,11 @@ const WALL_TEXTURE_PATH: &str = "C:/Users/triley/Projects/rust/test/rust_opengl/
 
 const TEST_ASSET_PATH: &str = "./src/assets/textures/Grid_UV_64PX.png";
 
+
 fn main() {
 
     // This is a sanity check to ensure that the log directory is properly set up.
     sanity_check();
-    Texture::load(TEST_ASSET_PATH);
 
     info("System Initialize", "root", SystemType::ROOT);
 
@@ -152,6 +154,8 @@ fn main() {
 
     _logger.add_info("Load gl functions");
 
+    let mut test_texture = Texture::new();
+    test_texture.load(TEST_ASSET_PATH);
 
     let mut color_vector: Color32 = Color32{
         r: 0.0,
@@ -230,7 +234,7 @@ fn main() {
     let mut texture2: u32 = 0;
 
     unsafe {
-        gl::Viewport(0, 0, 800,600);
+        gl::Viewport(0, 0, 600,600);
 
         gl::GenTextures(1, &mut texture2);
         gl::ActiveTexture(gl::TEXTURE1);
@@ -244,8 +248,8 @@ fn main() {
         // gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_MIN_FILTER, gl::NEAREST as i32);
         // gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_MAG_FILTER, gl::LINEAR as i32);
 
-        gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_MIN_FILTER, gl::NEAREST_MIPMAP_LINEAR as i32);
-        gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_MAG_FILTER, gl::NEAREST as i32);
+        gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_MIN_FILTER, gl::LINEAR_MIPMAP_LINEAR as i32);
+        gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_MAG_FILTER, gl::LINEAR as i32);
 
         gl::TexImage2D(
             gl::TEXTURE_2D,
@@ -312,6 +316,11 @@ fn main() {
 
     set_polygon_mode(PolygonMode::Fill);
 
+    let mut scale = 0.5;
+    let scale_step = 0.0001;
+    let mut scale_up: bool = true;
+    let mut transform: Matrix4 = Matrix4::create_scale_uniform(scale);
+
     'main_loop: loop {
 
 
@@ -319,9 +328,26 @@ fn main() {
         // handle events this frame
         process_input(&mut win, &events);
 
-        shader_program.use_program();
+        let current_time = get_gl_time(&glfw) / 10.0;
+
+        if scale_up {
+            scale += scale_step;
+            if scale >= 1.0 {
+                scale_up = false;
+            }
+        } else {
+            scale -= scale_step;
+            if scale <= 0.5 {
+                scale_up = true;
+            }
+        }
+
+        transform = Matrix4::create_scale_uniform(scale);
+        transform *= Matrix4::create_rotation_z(current_time as f32);
+
         unsafe {
             gl::Clear(gl::COLOR_BUFFER_BIT);
+            shader_program.set_uniform_matrix4fv("transform", 1, false, transform.as_slice());
             gl::DrawElements(gl::TRIANGLES, 6, gl::UNSIGNED_INT, std::ptr::null());
         }
         color_vector.rainbow_step_color(get_gl_time(&glfw));

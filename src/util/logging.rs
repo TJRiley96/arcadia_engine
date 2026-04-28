@@ -30,7 +30,8 @@ pub enum MessageType {
 pub enum SystemType {
     ROOT,
     SYSTEM,
-    SUBSYSTEM
+    SUBSYSTEM,
+    ASSET
 }
 
 
@@ -79,7 +80,8 @@ pub fn get_color_name_string(name: &str, system_type: SystemType) -> ColoredStri
     match system_type {
         SystemType::ROOT => name.bright_yellow().bold(),
         SystemType::SYSTEM => name.bright_blue().bold(),
-        SystemType::SUBSYSTEM => name.bright_cyan().bold()
+        SystemType::SUBSYSTEM => name.bright_cyan().bold(),
+        SystemType::ASSET => name.bright_white().bold(),
 
     }
 }
@@ -222,8 +224,8 @@ impl Logger {
         match self.system_type {
             SystemType::ROOT => self.name.bright_yellow().bold(),
             SystemType::SYSTEM => self.name.bright_blue().bold(),
-            SystemType::SUBSYSTEM => self.name.bright_cyan().bold()
-
+            SystemType::SUBSYSTEM => self.name.bright_cyan().bold(),
+            SystemType::ASSET => self.name.bright_white().bold()
         }
     }
 

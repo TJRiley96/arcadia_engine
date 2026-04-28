@@ -1,4 +1,4 @@
-/// Description: This is a template file for new Rust files in the project. It includes standard metadata and structure that should be followed for consistency across the codebase.
+/// Description
 ///
 /// author: "Triley"
 /// copyright: "Copyright (c) 2024 Triley. All rights reserved."

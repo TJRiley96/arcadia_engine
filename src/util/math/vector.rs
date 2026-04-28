@@ -8,11 +8,13 @@ pub struct Vector2 {
     pub y: f32,
 }
 
+#[derive(Copy, Clone)]
 pub struct Vector3 {
     pub x: f32,
     pub y: f32,
     pub z: f32,
 }
+#[derive(Copy, Clone)]
 pub struct Vector4 {
     pub x: f32,
     pub y: f32,
@@ -224,16 +226,16 @@ impl Vector3 {
     pub fn up() -> Self {
         Self{
             x: 0.0,
-            y: 1.0,
-            z: 0.0
+            y: 0.0,
+            z: 1.0
         }
     }
 
     pub fn down() -> Self {
         Self{
             x: 0.0,
-            y: -1.0,
-            z: 0.0
+            y: 0.0,
+            z: -1.0
         }
     }
 
@@ -256,16 +258,16 @@ impl Vector3 {
     pub fn forward() -> Self {
         Self{
             x: 0.0,
-            y: 0.0,
-            z: -1.0
+            y: -1.0,
+            z: 0.0
         }
     }
 
-    pub fn back() -> Self {
+    pub fn backward() -> Self {
         Self{
             x: 0.0,
-            y: 0.0,
-            z: 1.0
+            y: 1.0,
+            z: 0.0
         }
     }
 
@@ -279,19 +281,18 @@ impl Vector3 {
     }
 
     /// Computes the cross product of this vector with another vector, returning a new vector that is perpendicular to both.
-    pub fn cross(&self, other: &Vector3) -> Self {
+    pub fn cross(q: &Vector3, p: &Vector3) -> Self {
         Self{
-            x: self.y * other.z - self.z * other.y,
-            y: self.z * other.x - self.x * other.z,
-            z: self.x * other.y - self.y * other.x
+            x: q.y * p.z - q.z * p.y,
+            y: q.z * p.x - q.x * p.z,
+            z: q.x * p.y - q.y * p.x
         }
     }
 
     /// Computes the dot product of this vector with another vector, returning a scalar value.
-    pub fn dot(&self, other: &Vector3) -> f32 {
-         self.x * other.x + self.y * other.y + self.z * other.z
+    pub fn dot(q: &Vector3, p: &Vector3) -> f32 {
+        q.x * p.x + q.y * p.y + q.z * p.z
     }
-
     /// Computes the length (magnitude) of the vector, returning a scalar value.
     pub fn length(&self) -> f32 {
         (self.x * self.x + self.y * self.y + self.z * self.z).sqrt().abs()

@@ -1,5 +1,5 @@
 mod test_matrix2 {
-    use rust_opengl::util::math::matrix::Matrix2;
+    use arcadia_engine::util::math::matrix::Matrix2;
 
     #[test]
     fn test_matrix2_multiplication() {
@@ -27,7 +27,7 @@ mod test_matrix2 {
 }
 
 mod test_matrix4 {
-    use rust_opengl::util::math::matrix::Matrix4;
+    use arcadia_engine::util::math::matrix::Matrix4;
 
     #[test]
     fn test_matrix4_identity() {
