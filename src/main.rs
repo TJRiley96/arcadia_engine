@@ -74,8 +74,8 @@ const TEXTURE_COORDS: [[f32; 2]; 3] = [// top right
 
 const BORDER_COLOR: [f32; 4] = [1.0, 1.0, 0.0, 1.0];
 
-const TEST_TEXTURE_PATH: &str = "C:/Users/triley/Projects/rust/test/rust_opengl/src/assets/textures/Grid_UV_64PX.png";
-const WALL_TEXTURE_PATH: &str = "C:/Users/triley/Projects/rust/test/rust_opengl/src/assets/textures/wall.jpg";
+const TEST_TEXTURE_PATH: &str = "./src/assets/textures/Grid_UV_64PX.png";
+const WALL_TEXTURE_PATH: &str = "./src/assets/textures/wall.jpg";
 
 const TEST_ASSET_PATH: &str = "./src/assets/textures/Grid_UV_64PX.png";
 

@@ -1,2 +1,5 @@
 /target
+
+# Ignore build artifacts and logs
 target/
+log/
