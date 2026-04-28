@@ -1,6 +1,8 @@
 pub mod actor;
+pub mod camera_actor;
 pub mod component;
 pub mod components;
+pub mod game;
 pub mod mesh;
 pub mod renderer;
 pub mod shader;

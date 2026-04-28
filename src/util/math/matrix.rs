@@ -271,9 +271,9 @@ impl Matrix4 {
 
     pub fn create_translation(translation: Vector3) -> Matrix4 {
         let mut result = Matrix4::identity();
-        result.data[0][3] = translation.x;
-        result.data[1][3] = translation.y;
-        result.data[2][3] = translation.z;
+        result.data[3][0] = translation.x;
+        result.data[3][1] = translation.y;
+        result.data[3][2] = translation.z;
         result
     }
 

@@ -1,7 +1,7 @@
 // Built-in imports
 
 use arcadia_engine::ComponentTrait;
-use arcadia_engine::util::math::matrix::Matrix4;
+
 // Third-party imports
 use gl;
 use glfw::{
@@ -18,16 +18,20 @@ use image;
 // Local imports
 mod util;
 mod core;
+use crate::core::game;
 use crate::core::shader::{Buffer};
 use crate::util::{
     color::Color32,
     logging::Logger,
     logging::SystemType,
-    logging::*
+    logging::*,
+    math::matrix::Matrix4,
+    math::vector::Vector3,
 };
 use crate::core::{
     shader::*,
     texture::Texture,
+    game::Game,
 };
 
 const WINDOW_TITLE: &str = "Rust OpenGL";
@@ -139,7 +143,7 @@ fn main() {
     // TODO: Handle window creation failure more gracefully.
 
     let (mut win, events) = glfw
-        .create_window(800, 600, WINDOW_TITLE, glfw::WindowMode::Windowed)
+        .create_window(600, 600, WINDOW_TITLE, glfw::WindowMode::Windowed)
         .expect("Couldn't make a window and context");
 
     win.make_current();
@@ -187,7 +191,7 @@ fn main() {
     let mut texture1: u32 = 0;
 
     unsafe {
-        gl::Viewport(0, 0, 800,600);
+        gl::Viewport(0, 0, 600,600);
 
         gl::GenTextures(1, &mut texture1);
         gl::ActiveTexture(gl::TEXTURE0);
@@ -234,7 +238,6 @@ fn main() {
     let mut texture2: u32 = 0;
 
     unsafe {
-        gl::Viewport(0, 0, 600,600);
 
         gl::GenTextures(1, &mut texture2);
         gl::ActiveTexture(gl::TEXTURE1);
@@ -319,7 +322,13 @@ fn main() {
     let mut scale = 0.5;
     let scale_step = 0.0001;
     let mut scale_up: bool = true;
-    let mut transform: Matrix4 = Matrix4::create_scale_uniform(scale);
+    let mut transform: Matrix4 = Matrix4::identity();
+    let rotation_speed_multiplier: f32 = 2.0; // Radians per second
+    let mut translation: Vector3 = Vector3{x: 0.5, y: 0.0, z: 0.0};
+    let translation_speed: f32 = 0.5; // Units per second
+    let translation_max: f32 = 2.0;
+    let translation_min: f32 = -2.0;
+    let mut switch: bool = true;
 
     'main_loop: loop {
 
@@ -332,7 +341,7 @@ fn main() {
 
         if scale_up {
             scale += scale_step;
-            if scale >= 1.0 {
+            if scale >= 1.5 {
                 scale_up = false;
             }
         } else {
@@ -342,8 +351,24 @@ fn main() {
             }
         }
 
+        if switch {
+            translation.x += translation_speed * current_time as f32 * 0.0001;
+            if translation.x > translation_max {
+                translation.x = translation_max;
+                switch = false;
+            }
+        } else {
+            translation.x -= translation_speed * current_time as f32 * 0.0001;
+            if translation.x < translation_min {
+                translation.x = translation_min;
+                switch = true;
+            }
+
+        }
+
         transform = Matrix4::create_scale_uniform(scale);
-        transform *= Matrix4::create_rotation_z(current_time as f32);
+        transform *= Matrix4::create_rotation_z(current_time as f32 * rotation_speed_multiplier);
+        transform *= Matrix4::create_translation(translation);
 
         unsafe {
             gl::Clear(gl::COLOR_BUFFER_BIT);

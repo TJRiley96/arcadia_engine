@@ -15,9 +15,17 @@
 
 // Local imports
 use crate::core::actor::ActorTrait;
+use crate::core::component::Components;
+use crate::util::math::{matrix::Matrix4, quaternion::Quaternion, vector::Vector3};
 
 
-struct CameraActor {
+enum State {
+    Active,
+    Paused,
+    Dead,
+}
+
+pub struct CameraActor {
 
     // Placeholder for camera actor properties (e.g., position, rotation, field of view, etc.)
     id: u32,
@@ -29,11 +37,4 @@ struct CameraActor {
     position: Vector3,
     rotation: Quaternion,
     scale: f32,
-}
-
-impl ActorTrait for CameraActor {
-    fn update(&mut self, delta_time: f32) {
-        // Placeholder for updating the camera actor each frame (e.g., handling input, moving the camera, etc.)
-    }
-
 }

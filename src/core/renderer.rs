@@ -19,7 +19,9 @@ use glfw::{
 
 // Local imports
 use crate::util::logging::{Logger, error, info, warning, SystemType};
-use crate::core::shader::{Shader, Buffer, BufferType, VertexArray, buffer_data, clear_color};
+use crate::core::shader::{self, Buffer, BufferType, Shader, ShaderProgram, VertexArray, buffer_data, clear_color};
+use crate::core::game::Game;
+use crate::util::math::matrix::Matrix4;
 
 static RENDERER_LOGGER: LazyLock<Mutex<Logger>> = LazyLock::new(|| Mutex::new(Logger::new(Some("renderer"), Some(SystemType::SYSTEM))));
 
@@ -77,27 +79,92 @@ enum Dimension {
     D3 = gl::TEXTURE_3D as isize,
 }
 
-struct Renderer {
-    window: glfw::PWindow,
-    glfw: Glfw,
-    event_receiver: glfw::GlfwReceiver<(f64, glfw::WindowEvent)>,
+pub struct Renderer {
+    window: Option<glfw::PWindow>,
+    glfw: Option<Glfw>,
+    event_receiver: Option<glfw::GlfwReceiver<(f64, glfw::WindowEvent)>>,
     render_api: RenderAPI,
     window_mode: WindowMode,
+    textures: std::collections::HashMap<String, crate::core::texture::Texture>,
+    meshes: std::collections::HashMap<String, crate::core::mesh::Mesh>,
 }
 
 impl Renderer {
-    // pub fn new() -> Self {
-    //     Self {
-    //         window: None,
-    //         glfw: None,
-    //         event_receiver: None,
-    //         render_api: RenderAPI::OpenGL,
-    //         window_mode: WindowMode::Windowed,
-    //     }
-    // }
+    pub fn new() -> Self {
+        Self {
+            window: None,
+            glfw: None,
+            event_receiver: None,
+            render_api: RenderAPI::OpenGL,
+            window_mode: WindowMode::Windowed,
+            textures: std::collections::HashMap::new(),
+            meshes: std::collections::HashMap::new(),
+        }
+    }
 
-    pub fn initialize(&self) {
+    pub fn initialize(&mut self) -> bool{
         // Placeholder for OpenGL initialization logic
+        self.setup_window();
+        self.setup_open_gl();
+        true
+    }
+
+    pub fn shutdown(&self) {
+        // Placeholder for OpenGL shutdown logic
+    }
+
+    pub fn unload_data(&self) {
+        // Placeholder for unloading resources and cleaning up
+    }
+
+    pub fn draw(&self) {
+        // Placeholder for drawing logic
+    }
+
+    /// Sets the viewport dimensions for rendering. Logs an error if the operation fails.
+    pub fn set_viewport(&self, width: i32, height: i32) {
+        unsafe {
+            gl::Viewport(0, 0, width, height);
+        }
+    }
+
+    pub fn set_view_matrix(&self, view_matrix: &Matrix4) {
+        // Placeholder for setting the view matrix uniform in the shader
+    }
+
+    pub fn set_projection_matrix(&self, projection_matrix: &Matrix4) {
+        // Placeholder for setting the projection matrix uniform in the shader
+    }
+
+    pub fn clear(&self) {
+        // Placeholder for clearing the screen
+    }
+
+    pub fn render(&self) {
+        // Placeholder for rendering logic
+    }
+
+    pub fn add_texture(&mut self, name: String, texture: crate::core::texture::Texture) {
+        self.textures.insert(name, texture);
+    }
+
+    pub fn add_mesh(&mut self, name: String, mesh: crate::core::mesh::Mesh) {
+        self.meshes.insert(name, mesh);
+    }
+
+    pub fn set_light_uniforms(&self, shader: &Shader) {
+        // Placeholder for setting light-related uniforms in the shader
+    }
+
+    pub fn set_ambient_light(&self, color: [f32; 3]) {
+        // Placeholder for setting ambient light color in the shader
+    }
+
+    fn load_shader(&self, vertex_path: &str, fragment_path: &str) -> bool {
+        // Placeholder for loading and compiling a shader from file paths
+        ShaderProgram::from_shaders(vertex_path, fragment_path).expect("Failed to load shader");
+
+        true
     }
 
     fn setup_window(&mut self) {
@@ -115,9 +182,11 @@ impl Renderer {
         glfw.window_hint(glfw::WindowHint::ContextVersionMajor(3));
         glfw.window_hint(glfw::WindowHint::ContextVersionMinor(3));
         glfw.window_hint(glfw::WindowHint::OpenGlProfile(glfw::OpenGlProfileHint::Core));
-        self.glfw = glfw;
+        self.glfw = Some(glfw);
 
         let (mut window, event_receiver): (glfw::PWindow, glfw::GlfwReceiver<(f64, glfw::WindowEvent)>) = self.glfw
+            .as_mut()
+            .unwrap()
             .create_window(800, 600, "Arcadia Engine", glfw::WindowMode::Windowed)
             .expect("Failed to create GLFW window.");
 
@@ -125,15 +194,15 @@ impl Renderer {
         window.set_key_polling(true);
         window.set_close_polling(true);
 
-        self.window = window;
-        self.event_receiver = event_receiver;
+        self.window = Some(window);
+        self.event_receiver = Some(event_receiver);
 
     }
 
     fn setup_open_gl(&mut self) {
         // Placeholder for setting up OpenGL context and state
         gl::load_with(|s| {
-        match self.window.get_proc_address(s) {
+        match self.window.as_mut().unwrap().get_proc_address(s) {
             Some(f) => f as *const _,
             None => std::ptr::null(),
         }});
@@ -173,21 +242,6 @@ impl Renderer {
     fn setup_wgpu(&self) {
         todo!("Implement WGPU setup logic");
         // Placeholder for setting up WGPU context and state
-    }
-
-    /// Sets the viewport dimensions for rendering. Logs an error if the operation fails.
-    pub fn set_viewport(&self, width: i32, height: i32) {
-        unsafe {
-            gl::Viewport(0, 0, width, height);
-        }
-    }
-
-    pub fn clear(&self) {
-        // Placeholder for clearing the screen
-    }
-
-    pub fn render(&self) {
-        // Placeholder for rendering logic
     }
 
 }

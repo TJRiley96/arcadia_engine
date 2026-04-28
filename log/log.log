@@ -1,27 +1,27 @@
 [ROOT] Logger Initialize
-[ROOT][2026-04-28 02:01:29][INFO] ..... File Creation started: log\log.log 
-[ROOT][2026-04-28 02:01:29][INFO] ..... Logger created.
-[ROOT][2026-04-28 02:01:29][INFO] ..... Load gl functions
+[ROOT][2026-04-28 19:36:01][INFO] ..... File Creation started: log\log.log 
+[ROOT][2026-04-28 19:36:01][INFO] ..... Logger created.
+[ROOT][2026-04-28 19:36:02][INFO] ..... Load gl functions
 [SHADER] Logger Initialize
-[SHADER][2026-04-28 02:01:29][INFO] ..... Vertex Array Object created successfully.
-[SHADER][2026-04-28 02:01:29][INFO] ..... Vertex Array Object bound.
-[SHADER][2026-04-28 02:01:29][INFO] ..... Buffer created successfully.
-[SHADER][2026-04-28 02:01:29][INFO] ..... Buffer bound.
-[SHADER][2026-04-28 02:01:29][INFO] ..... Buffer data set.
-[SHADER][2026-04-28 02:01:29][INFO] ..... Buffer created successfully.
-[SHADER][2026-04-28 02:01:29][INFO] ..... Buffer bound.
-[SHADER][2026-04-28 02:01:29][INFO] ..... Buffer data set.
-[SHADER][2026-04-28 02:01:29][INFO] ..... Shader Program created successfully.
-[SHADER][2026-04-28 02:01:29][INFO] ..... Shader created successfully.
-[SHADER][2026-04-28 02:01:29][INFO] ..... Shader source set.
-[SHADER][2026-04-28 02:01:29][INFO] ..... Shader compiled successfully.
-[SHADER][2026-04-28 02:01:29][INFO] ..... Shader created successfully.
-[SHADER][2026-04-28 02:01:29][INFO] ..... Shader source set.
-[SHADER][2026-04-28 02:01:29][INFO] ..... Shader compiled successfully.
-[SHADER][2026-04-28 02:01:29][INFO] ..... Shader attached to program.
-[SHADER][2026-04-28 02:01:29][INFO] ..... Shader attached to program.
-[SHADER][2026-04-28 02:01:29][INFO] ..... Shader Program linked successfully.
-[SHADER][2026-04-28 02:01:29][INFO] ..... Shader deleted.
-[SHADER][2026-04-28 02:01:29][INFO] ..... Shader deleted.
-[ROOT][2026-04-28 02:01:29][INFO] ..... Max vertex attributes supported: 16
-[ROOT][2026-04-28 02:02:38][INFO] ..... Exiting program.
+[SHADER][2026-04-28 19:36:02][INFO] ..... Vertex Array Object created successfully.
+[SHADER][2026-04-28 19:36:02][INFO] ..... Vertex Array Object bound.
+[SHADER][2026-04-28 19:36:02][INFO] ..... Buffer created successfully.
+[SHADER][2026-04-28 19:36:02][INFO] ..... Buffer bound.
+[SHADER][2026-04-28 19:36:02][INFO] ..... Buffer data set.
+[SHADER][2026-04-28 19:36:02][INFO] ..... Buffer created successfully.
+[SHADER][2026-04-28 19:36:02][INFO] ..... Buffer bound.
+[SHADER][2026-04-28 19:36:02][INFO] ..... Buffer data set.
+[SHADER][2026-04-28 19:36:02][INFO] ..... Shader Program created successfully.
+[SHADER][2026-04-28 19:36:02][INFO] ..... Shader created successfully.
+[SHADER][2026-04-28 19:36:02][INFO] ..... Shader source set.
+[SHADER][2026-04-28 19:36:02][INFO] ..... Shader compiled successfully.
+[SHADER][2026-04-28 19:36:02][INFO] ..... Shader created successfully.
+[SHADER][2026-04-28 19:36:02][INFO] ..... Shader source set.
+[SHADER][2026-04-28 19:36:02][INFO] ..... Shader compiled successfully.
+[SHADER][2026-04-28 19:36:02][INFO] ..... Shader attached to program.
+[SHADER][2026-04-28 19:36:02][INFO] ..... Shader attached to program.
+[SHADER][2026-04-28 19:36:02][INFO] ..... Shader Program linked successfully.
+[SHADER][2026-04-28 19:36:02][INFO] ..... Shader deleted.
+[SHADER][2026-04-28 19:36:02][INFO] ..... Shader deleted.
+[ROOT][2026-04-28 19:36:02][INFO] ..... Max vertex attributes supported: 16
+[ROOT][2026-04-28 19:36:40][INFO] ..... Exiting program.
